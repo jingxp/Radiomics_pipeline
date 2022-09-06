@@ -1,6 +1,22 @@
 import SimpleITK as itk
 
-
+def array2sitkimage(array):
+    
+    spacing_dict = {384:[0.97, 0.8854, 0.8854],416:[1.2,0.84,0.84],768:[1.2,0.4557,0.4557],480:[1.7,0.9375,0.9375],420:[1.2,0.8413,0.8413],448:[1.2,1.049,1.049],
+    444:[1.2,0.8413,0.8413],512:[1.2,0.82,0.82],832:[1.6,0.5408,0.5408]}
+    
+    width = array.shape[1]
+    spacing = spacing_dict[width]
+    image_sitk = itk.GetImageFromArray(array)
+    image_sitk.SetOrigin((0, 0, 0))
+    image_sitk.SetSpacing(spacing)
+    
+    img_size = image_sitk.GetSize()
+    img_spacing = image_sitk.GetSpacing() 
+    img_origin = image_sitk.GetOrigin()
+    img_direction = image_sitk.GetDirection()
+    
+    return image_sitk, img_size, img_spacing, img_origin, img_direction
 
 def read_nifti(image_path):
     """
