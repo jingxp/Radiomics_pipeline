@@ -33,7 +33,7 @@ def read_excel_file(excel_file):
     """
     patient_id = []
     df = pd.read_excel(excel_file)
-    for index, row in train_df.iterrows():
+    for index, row in df.iterrows():
         pt_id = row.patient_ID
         _date = row.EXAM_DATE
         date = _date[-4:] + _date[3:5] + _date[0:2]
