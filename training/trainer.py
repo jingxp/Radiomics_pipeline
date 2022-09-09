@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, confusion_matrix
 sys.path.append('../../radiomics_pipeline/utilities/')
 from metircs_evaluation import conf_matrix, metrics
 
@@ -53,6 +53,7 @@ def learning(clf, x_train, y_train, x_val, y_val, x_test=None):
 
     
     summary['val_accuracy'] = accuracy
+    summary['confusion_matrix'] = confusion_matrix
     summary['val_sensitivity'] = sensitivity
     summary['val_specificity'] = specificity
     summary['val_auc'] = roc_auc_val
