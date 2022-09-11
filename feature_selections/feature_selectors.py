@@ -14,7 +14,7 @@ from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 
 
 def sequential_selection(clf_model, n_features=3, foward_state=True, floating_state=False,
-                         metric='roc_auc', k_fold=3, n_jobs=-1):
+                         metric='accuracy', k_fold=3, n_jobs=-1):
     '''
     integrating sequential feature selection algorithms into a learning algorithm
     Depending on the size of the feature matrix and CPU resources,

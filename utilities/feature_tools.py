@@ -142,26 +142,27 @@ def cross_val_stats(fold_stats):
     '''
 
     acc = []
-    sen = []
-    spc = []
-    auc = []
+    # sen = []
+    # spc = []
+    # auc = []
     for keys, vals in fold_stats.items():
         if type(vals) == dict:
             acc.append(vals['val_accuracy'])
-            sen.append(vals['val_sensitivity'])
-            spc.append(vals['val_specificity'])
-            auc.append(vals['val_auc'])
+            # sen.append(vals['val_sensitivity'])
+            # spc.append(vals['val_specificity'])
+            # auc.append(vals['val_auc'])
     acc = np.array(acc)
-    sen = np.array(sen)
-    spc = np.array(spc)
-    auc = np.array(auc)
+    # sen = np.array(sen)
+    # spc = np.array(spc)
+    # auc = np.array(auc)
 
     mean_acc, std_acc = get_stats(acc)
-    mean_sen, std_sen = get_stats(sen)
-    mean_spc, std_spc = get_stats(spc)
-    mean_auc, std_auc = get_stats(auc)
+    # mean_sen, std_sen = get_stats(sen)
+    # mean_spc, std_spc = get_stats(spc)
+    # mean_auc, std_auc = get_stats(auc)
     
-    return mean_acc, mean_sen, mean_spc, mean_auc, std_acc, std_sen, std_spc, std_auc 
+    return mean_acc, std_acc
+    # mean_sen, mean_spc, mean_auc, std_acc, std_sen, std_spc, std_auc 
 
 
 

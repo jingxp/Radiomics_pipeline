@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-from sklearn.metrics import roc_auc_score, confusion_matrix
+from sklearn.metrics import roc_auc_score
 sys.path.append('../../radiomics_pipeline/utilities/')
 from metircs_evaluation import conf_matrix, metrics
 
@@ -43,22 +43,27 @@ def learning(clf, x_train, y_train, x_val, y_val, x_test=None):
         roc_auc_val = -999
     y_val_pred_prob = y_val_pred_prob.tolist()
     confusion_matrix = conf_matrix(y_val, y_val_pred)
-    accuracy, sensitivity, specificity = metrics(confusion_matrix)
+    #accuracy, sensitivity, specificity = metrics(confusion_matrix)
+    accuracy, balanced_acc = metrics(y_val, y_val_pred)
     
     if x_test is not None:        
         y_test_pred_prob = clf.predict_proba(x_test)[:,1]
         y_test_pred_prob = y_test_pred_prob.tolist()
+        y_test_pred = clf.predict(x_test)
+        y_test_pred = y_test_pred.tolist()
     else:
         y_test_pred_prob = None
 
     
     summary['val_accuracy'] = accuracy
     summary['confusion_matrix'] = confusion_matrix
-    summary['val_sensitivity'] = sensitivity
-    summary['val_specificity'] = specificity
-    summary['val_auc'] = roc_auc_val
+    # summary['val_sensitivity'] = sensitivity
+    # summary['val_specificity'] = specificity
+    summary['balanced_acc'] = balanced_acc
+    # summary['val_auc'] = roc_auc_val
     summary['val_pred_prob'] = y_val_pred_prob
     summary['test_pred_prob'] = y_test_pred_prob
+    summary['test_pred'] = y_test_pred
     
     return summary
     
