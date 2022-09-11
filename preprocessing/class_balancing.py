@@ -25,6 +25,6 @@ def smote_balancing(feature_set, label_set):
     '''
     
     sm = SMOTE(sampling_strategy='auto',  random_state=None)
-    feature_set_balanced, label_set_balanced = sm.fit_sample(feature_set, label_set)  
+    feature_set_balanced, label_set_balanced = sm.fit_resample(feature_set, label_set)  
     
     return feature_set_balanced, label_set_balanced
