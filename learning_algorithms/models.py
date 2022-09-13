@@ -1,12 +1,48 @@
 from sklearn import svm
 from sklearn import naive_bayes
+from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import LinearSVC, SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 
+def svc(degree = 3):
+    '''    
+    Parameters
+    ----------
+    class_weight : dict or list
+        Assigining weights to  class labels e.g., (0:1, 1:2).
 
+    Returns
+    -------
+    clf : class
+        A compiled decision tree model.
+
+    '''
+    
+    clf = SVC(kernel='poly', degree=degree)
+    
+    return clf
+
+def svm():
+    '''    
+    Parameters
+    ----------
+    class_weight : dict or list
+        Assigining weights to  class labels e.g., (0:1, 1:2).
+
+    Returns
+    -------
+    clf : class
+        A compiled decision tree model.
+
+    '''
+    
+    clf = LinearSVC(random_state = None)
+    
+    return clf
 
 def decicion_tree(criterion='gini', max_depth=10, class_weight=None):
     '''    
@@ -30,6 +66,28 @@ def decicion_tree(criterion='gini', max_depth=10, class_weight=None):
                                  max_depth = max_depth,
                                  class_weight = class_weight,
                                  random_state = None)
+    
+    return clf
+
+def lr(multi_class= 'multinomial'):
+    '''    
+    Parameters
+    ----------
+    criterion : str
+        selected from either 'gini' or 'entropy'.
+    max_depth : int
+        the maximum depth of the trees.
+    class_weight : dict or list
+        Assigining weights to  class labels e.g., (0:1, 1:2).
+
+    Returns
+    -------
+    clf : class
+        A compiled LR model.
+
+    '''
+    
+    clf = LogisticRegression(penalty="l1", solver="saga", multi_class = multi_class, class_weight = None )
     
     return clf
 

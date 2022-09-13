@@ -1,3 +1,4 @@
+from mailbox import NotEmptyError
 import sys
 import numpy as np
 from sklearn.metrics import roc_auc_score
@@ -35,13 +36,21 @@ def learning(clf, x_train, y_train, x_val, y_val, x_test=None):
     
     clf.fit(x_train, y_train)
     y_val_pred = clf.predict(x_val)
-    y_val_pred_prob = clf.predict_proba(x_val)[:,1]
+
+    try:
+        y_val_pred_prob = clf.predict_proba(x_val)[:,1]
+        y_val_pred_prob = y_val_pred_prob.tolist()
+    except AttributeError:
+        y_val_pred_prob = None
+
     
     try:
         roc_auc_val = roc_auc_score(y_val, y_val_pred_prob)
     except ValueError:
         roc_auc_val = -999
-    y_val_pred_prob = y_val_pred_prob.tolist()
+    except TypeError:
+        roc_auc_val = -999
+
     confusion_matrix = conf_matrix(y_val, y_val_pred)
     #accuracy, sensitivity, specificity = metrics(confusion_matrix)
     accuracy, balanced_acc = metrics(y_val, y_val_pred)
@@ -53,7 +62,7 @@ def learning(clf, x_train, y_train, x_val, y_val, x_test=None):
         y_test_pred = y_test_pred.tolist()
     else:
         y_test_pred_prob = None
-
+        y_test_pred = None
     
     summary['val_accuracy'] = accuracy
     summary['confusion_matrix'] = confusion_matrix
